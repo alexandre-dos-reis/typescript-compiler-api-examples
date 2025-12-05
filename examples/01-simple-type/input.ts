@@ -7,18 +7,21 @@ const userTypeNode = ts.factory.createTypeAliasDeclaration(
   ts.factory.createIdentifier("User"),
   undefined,
   ts.factory.createTypeLiteralNode([
+    // id: string
     ts.factory.createPropertySignature(
       undefined,
       "id",
       undefined,
       ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
     ),
+    // name: string
     ts.factory.createPropertySignature(
       undefined,
       "name",
       undefined,
       ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
     ),
+    // age?: number
     ts.factory.createPropertySignature(
       undefined,
       "age",
