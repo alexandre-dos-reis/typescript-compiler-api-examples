@@ -1,43 +1,48 @@
-import ts from "typescript";
+import {
+  factory as f,
+  SyntaxKind as sk,
+  NodeFlags,
+  createPrinter,
+} from "typescript";
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-const userTypeNode = ts.factory.createTypeAliasDeclaration(
-  [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-  ts.factory.createIdentifier("User"),
+const userTypeNode = f.createTypeAliasDeclaration(
+  [f.createModifier(sk.ExportKeyword)],
+  f.createIdentifier("User"),
   undefined,
-  ts.factory.createTypeLiteralNode([
+  f.createTypeLiteralNode([
     // id: string
-    ts.factory.createPropertySignature(
+    f.createPropertySignature(
       undefined,
       "id",
       undefined,
-      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+      f.createKeywordTypeNode(sk.StringKeyword),
     ),
     // name: string
-    ts.factory.createPropertySignature(
+    f.createPropertySignature(
       undefined,
       "name",
       undefined,
-      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+      f.createKeywordTypeNode(sk.StringKeyword),
     ),
     // age?: number
-    ts.factory.createPropertySignature(
+    f.createPropertySignature(
       undefined,
       "age",
-      ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-      ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+      f.createToken(sk.QuestionToken),
+      f.createKeywordTypeNode(sk.NumberKeyword),
     ),
   ]),
 );
 
-const file = ts.factory.createSourceFile(
+const file = f.createSourceFile(
   [userTypeNode],
-  ts.factory.createToken(ts.SyntaxKind.EndOfFileToken),
-  ts.NodeFlags.None,
+  f.createToken(sk.EndOfFileToken),
+  NodeFlags.None,
 );
 
-const printer = ts.createPrinter();
+const printer = createPrinter();
 
 const output = printer.printFile(file);
 
